@@ -8,7 +8,7 @@ const setMiddleware=require('./middleware/middleware')
 const setRoutes=require('./routes/routes')
 
 
-const MONGODB_URI=`mongodb+srv://${config.get('db-username')}:${config.get('db-password')}@cluster0.ph6nu.mongodb.net/exp-blog`
+const MONGODB_URI=`mongodb+srv://${config.get('db-username')}:${config.get('db-password')}@cluster0.ph6nu.mongodb.net/exp-blog?retryWrites=true&w=majority`
 
 
 const app=express()
