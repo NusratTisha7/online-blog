@@ -1,0 +1,61 @@
+<%- include('../../../partials/head.ejs') %>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2">
+                <%- include('../../../partials/sidebar.ejs') %>
+            </div>
+            <div class="col-md-10 my-5">
+               <div class="card card-body mx-5 py-5">
+                   <h5 class="my-3">Edit Your Post</h5>
+                   <form action="/posts/edit/<%=post._id%> " method="POST" enctype="multipart/form-data"> <!--amra get Controller theke dekhte passi jokhni take render kora hosse ekta post asche -->
+                        <div class="form-group">
+                            <label for="title">Enter Your Post Title</label>
+                            <input type="text" name="title" id="title" class="form-control <%=error.title?'is-invalid':''%>" value="<%=post.title%>">
+                            <div class="invalid-feedback">
+                                <%=error.title%> 
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="tiny-mce-post-body">Enter Your Post Body</label>
+                            <textarea name="body" id="tiny-mce-post-body" class="form-control <%=error.body?'is-invalid':''%>"><%=post.body%></textarea>
+                            <div class="invalid-feedback">
+                                <%=error.body%> 
+                            </div>
+                        </div>
+                        <!--image thakle image take amader handle korte hobe-->
+                        <div class="form-group">
+                            <label for="tags">Enter Some Tags (Max 10)</label>
+                            <input type="text" name="tags" id="tags" placeholder="tag1, tag2, tag3" class="form-control" value="<%=post.tags.length>0?post.tags.join(', '): ''%>">
+                        </div>
+                        <%if(post.thumbnail){%> <!--jodi thumbnail image ta theke thake tahole amra take show korte pari-->
+                            <img src="<%=post.thumbnail%>" id="thumbnail" alt="Post Thumbnial" class="img-fluid mb-4"> <!--post.thumbnail er moddhe post ta ase-->
+                        <%}%> 
+                        <div class="form-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Upload</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" name="post-thumbnail" class="custom-file-input" id="inputGroupFile">
+                                <label for="inputGroupFile" class="custom-file-label">Choose File</label>
+                            </div>
+                        </div>
+                        <input type="submit" class="btn btn-primary" value="Update Post">
+                        <a class="btn btn-danger" href="/posts/delete/<%=post._id%>">Delete Post</a>
+                    </form>
+               </div> 
+            </div>
+        </div>
+    </div>
+<%- include('../../../partials/footer.ejs') %>
+
+<!--tiny cloud er link-->
+<script src="https://cdn.tiny.cloud/1/h93s43x90fwx27p3tpqw4x15gxx71ake5xtlzum1477s9j1t/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="/scripts/tinymce.js"></script>
+<script>
+    $('#inputGroupFile').on('change',function(e){
+        let filename=e.target.files[0].name
+        $(this).next('.custom-file-label').html(filename)
+    })
+</script>
+</body>
+</html>
